@@ -10,25 +10,8 @@ class Menu extends Component {
         };
     }
 
-    componentDidMount(){
-    }
-
     onDishSelect(dish) {
       this.setState({ selectedDish: dish})
-    }
-
-    renderDish(dish){
-      if(dish != null){
-        return(
-          <DishDetail
-            dish={dish}
-          />
-        );
-      }else{
-        return(
-          <div></div>
-        );
-      }
     }
 
     render() {
@@ -50,7 +33,9 @@ class Menu extends Component {
             <div className="row">
                   {menu}
             </div>
-              {this.renderDish(this.state.selectedDish)}
+            <DishDetail
+              dish={this.state.selectedDish}
+            />
           </div>
         );
     }
