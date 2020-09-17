@@ -8,7 +8,7 @@ class DishDetail extends Component {
     }
 
     renderDish(dish){
-        if(dish !== null){
+        if(dish !== undefined){
             return(
             <div className="col-12 col-md-5 m-1">
                 <Card>
@@ -28,12 +28,12 @@ class DishDetail extends Component {
     }
 
     renderComments(dish){
-        if(dish !== null){
+        if(dish !== undefined){
             const comments = dish.comments.map((comment) => {
                 return(
                     <ul class="list-unstyled">
                         <li>{comment.comment}</li>
-                        <li>{`-- ${comment.author}, ${comment.date}`}</li>
+                        <li>{`-- ${comment.author}, ${new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}`}</li>
                     </ul>
             )});
             return (
@@ -52,10 +52,12 @@ class DishDetail extends Component {
     render() {
 
         return(
+        <div className="container">
             <div className="row">
                 {this.renderDish(this.props.dish)}
                 {this.renderComments(this.props.dish)}
             </div>
+        </div>
         );
     }
 
