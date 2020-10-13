@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Row, Col, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Control, Form, Errors, actions } from 'react-redux-form';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -32,8 +32,10 @@ class Contact extends Component {
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
+        this.props.resetFeedbackForm();
         // event.preventDefault();
     }
+
 
     // handleBlur = (field) => (evt) => {
     //     this.setState({
@@ -114,7 +116,7 @@ class Contact extends Component {
                       <h3>Send us your Feedback</h3>
                    </div>
                     <div className="col-12 col-md-9">
-                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                        <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -191,7 +193,7 @@ class Contact extends Component {
                                         validators={{
                                             required, validEmail
                                         }}
-                                         />
+                                    />
                                     <Errors
                                         className="text-danger"
                                         model=".email"
@@ -203,7 +205,57 @@ class Contact extends Component {
                                      />
                                 </Col>
                             </Row>
-                        </LocalForm>
+                            <Row className="form-group">
+                                <Col md={{size: 6, offset: 2}}>
+                                    <Label check>
+                                        <Control.checkbox 
+                                            model=".agree" id="agree" name="agree"
+                                            // className="form-control"
+                                        /> {'  '}
+                                        <strong>May we contact you?</strong>
+                                    </Label>
+                                </Col>
+                                <Col md={{size: 3, offset: 1}}>
+                                    <Control.select model=".contactType" id="contactType" name="contactType"
+                                        className="form-control"
+                                        validators={{
+                                            required
+                                        }
+                                    }>
+                                        <option value="email">Email</option>
+                                        <option value="tlf">Tlf.</option>
+                                    </Control.select>
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="message" md={2}>Email</Label>
+                                <Col md={10}>
+                                    <Control.textarea model=".message" id="message" name="message" rows={6}
+                                        className="form-control"
+                                        validators={{
+                                            required, minLength: minLength(3), maxLength: maxLength(15)
+                                        }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".message"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required',
+                                            minLength: 'Must be greater than 3 characters',
+                                            maxLength: 'Must be 15 characters or less'
+                                        }}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={{size: 10, offset: 2}}>
+                                    <Button type="submit" color="primary">
+                                        Send Feedback
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Form>
                     </div>
                </div>
             </div>
