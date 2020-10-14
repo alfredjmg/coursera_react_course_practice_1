@@ -4,7 +4,6 @@ import { Card, CardImg, CardText, CardBody,
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 import { FadeTransform } from 'react-animation-components';
-    
 
 function RenderCard({item, isLoading, errMess}) {
     
@@ -14,7 +13,6 @@ function RenderCard({item, isLoading, errMess}) {
         );
     }
     else if (errMess) {
-        console.log(item)
         return(
                 <h4>{errMess}</h4>
         );
@@ -41,6 +39,8 @@ function RenderCard({item, isLoading, errMess}) {
 
 function Home(props) {
 
+    console.log(props)
+    
     return(
         <div className="container">
             <div className="row align-items-start">
@@ -51,7 +51,7 @@ function Home(props) {
                     <RenderCard item={props.promotion} isLoading={props.promoLoading} errMess={props.promoErrMess} />
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.leader} />
+                    <RenderCard item={props.leader} isLoading={props.leaderLoading} errMess={props.leaderErrMess}/>
                 </div>
             </div>
         </div>
