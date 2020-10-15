@@ -3,6 +3,7 @@ import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'r
 import { Link } from 'react-router-dom';
 import { baseUrl } from '../shared/baseUrl';
 import { Loading } from './LoadingComponent';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 function RenderLeader({ leaders, isLoading, errMess }) {
 
@@ -21,22 +22,26 @@ function RenderLeader({ leaders, isLoading, errMess }) {
     else{
         const leader = leaders.map((leader) => {
             return (
-                <div key={leader.id} className="col-12 mb-3">
-                    <Media>
-                        <Media left href="#">
-                            <Media className="mr-5" object src={baseUrl + leader.image} alt={leader.name} />
-                        </Media>
-                        <Media body>
-                            <Media className="mb-3" heading>
-                                {leader.name}
+                <Stagger in>
+                    <Fade in>
+                    <div key={leader.id} className="col-12 mb-3">
+                        <Media>
+                            <Media left href="#">
+                                <Media className="mr-5" object src={baseUrl + leader.image} alt={leader.name} />
                             </Media>
-                            <Media className="mb-3">
-                                {leader.designation}
+                            <Media body>
+                                <Media className="mb-3" heading>
+                                    {leader.name}
+                                </Media>
+                                <Media className="mb-3">
+                                    {leader.designation}
+                                </Media>
+                                {leader.description}                
                             </Media>
-                            {leader.description}                
                         </Media>
-                    </Media>
-                </div>
+                    </div>
+                    </Fade>
+                </Stagger>
             );
         }); 
         return(
